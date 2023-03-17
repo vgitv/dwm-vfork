@@ -46,7 +46,9 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
-#define MODKEY Mod1Mask
+// Mod1Mask = Alt
+// Mod4Mask = Windows key
+#define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -59,10 +61,12 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[]    = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]     = { "st", "zsh", NULL };
+// static const char *termcmd[]     = { "st", "zsh", NULL };
+static const char *termcmd[]     = { "alacritty", NULL };
 static const char *ranger[]      = { "st", "-e", "ranger", NULL };
 static const char *htop[]        = { "st", "-e", "htop", NULL };
-static const char *firefox[]     = { "firefox", NULL };
+// static const char *firefox[]     = { "firefox", NULL };
+static const char *brave[]     = { "brave-browser", NULL };
 
 // scripts perso
 static const char *diskutill[]   = { "diskutil", "-l", NULL };
@@ -118,7 +122,8 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_l,      spawn,          {.v = diskutill } },
 	{ MODKEY|ControlMask,           XK_m,      spawn,          {.v = diskutilm } },
 	{ MODKEY|ControlMask,           XK_u,      spawn,          {.v = diskutilu } },
-	{ MODKEY|ControlMask,           XK_f,      spawn,          {.v = firefox } },
+	// { MODKEY|ControlMask,           XK_f,      spawn,          {.v = firefox } },
+	{ MODKEY|ControlMask,           XK_b,      spawn,          {.v = brave } },
 	{ MODKEY|ControlMask,           XK_p,      spawn,          {.v = play } },
 	{ MODKEY,                       XK_x,      spawn,          {.v = screenshot } },
 	{ MODKEY,                       XK_Pause,  spawn,          {.v = systempause } },
