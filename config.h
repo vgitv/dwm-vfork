@@ -71,6 +71,7 @@ static const char *volumetoggle[] =  { "set-volume", "--toggle", NULL };
 static const char *volumedisplay[] = { "set-volume", "--display", NULL };
 static const char *screenshot[] =    { "screenshot", NULL };
 static const char *systempause[] =   { "systempause", NULL };
+static const char *refreshstatus[] = { "refresh-status", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -111,6 +112,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY,                       XK_Pause,  spawn,          {.v = systempause } },
 	{ MODKEY,                       XK_x,      spawn,          {.v = screenshot } },
+	{ MODKEY,                       XK_r,      spawn,          {.v = refreshstatus } },
 	{ 0,                            XF86XK_AudioLowerVolume,    spawn,          {.v = volumelower } },
 	{ 0,                            XF86XK_AudioRaiseVolume,    spawn,          {.v = volumeraise } },
 	{ 0,                            XF86XK_AudioMute,           spawn,          {.v = volumetoggle } },
