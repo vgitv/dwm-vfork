@@ -75,7 +75,7 @@ static const char *refreshstatus[] = { "refresh-status", NULL };
 static const char *sshterm[]       = { "sshterm", NULL };
 static const char *passmenu[]      = { "notify-passmenu", NULL };
 static const char *copyqmenu[]     = { "copyq", "menu", NULL };
-static const char *lock[]          = { "i3lock", "-p", "default", "-e", "-f", "-i", "/usr/local/share/dwm/dwm2.png", NULL };
+static const char *lock[]          = { "i3lock", "-p", "default", "-e", "-f", "-i", "/usr/local/share/dwm/dwm.png", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
