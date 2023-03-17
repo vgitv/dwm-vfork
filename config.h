@@ -64,6 +64,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 
 // personnal
+// termcmd should use $TERMINAL env var
 static const char *termcmd[]       = { "alacritty", NULL };
 static const char *volumelower[]   = { "set-volume", "--lower", NULL };
 static const char *volumeraise[]   = { "set-volume", "--raise", NULL };
@@ -74,8 +75,9 @@ static const char *systempause[]   = { "systempause", NULL };
 static const char *refreshstatus[] = { "refresh-status", NULL };
 static const char *sshterm[]       = { "sshterm", NULL };
 static const char *passmenu[]      = { "notify-passmenu", NULL };
+static const char *passmenutype[]  = { "notify-passmenu", "--type", NULL };
 static const char *copyqmenu[]     = { "copyq", "menu", NULL };
-static const char *lock[]          = { "i3lock", "-p", "default", "-e", "-f", "-i", "/usr/local/share/dwm/dwm.png", NULL };
+static const char *screenlock[]    = { "screenlock", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -86,8 +88,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.005} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.005} },
+	{ MODKEY|ControlMask,           XK_h,      setmfact,       {.f = -0.005} },
+	{ MODKEY|ControlMask,           XK_l,      setmfact,       {.f = +0.005} },
 	{ MODKEY,                       XK_Left,   setmfact,       {.f = -0.005} },
 	{ MODKEY,                       XK_Right,  setmfact,       {.f = +0.005} },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
@@ -116,13 +118,14 @@ static Key keys[] = {
 	TAGKEYS(                        XK_underscore,             7)
 	TAGKEYS(                        XK_ccedilla,               8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = passmenu } },
+	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = passmenutype } },
+	{ MODKEY|ControlMask,           XK_p,      spawn,          {.v = passmenu } },
 	{ MODKEY,                       XK_Pause,  spawn,          {.v = systempause } },
 	{ MODKEY,                       XK_x,      spawn,          {.v = screenshot } },
 	{ MODKEY,                       XK_r,      spawn,          {.v = refreshstatus } },
 	{ MODKEY,                       XK_s,      spawn,          {.v = sshterm } },
 	{ MODKEY,                       XK_c,      spawn,          {.v = copyqmenu } },
-	{ MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lock } },
+	{ MODKEY,                       XK_l,      spawn,          {.v = screenlock } },
 	{ 0,                            XF86XK_AudioLowerVolume,    spawn,          {.v = volumelower } },
 	{ 0,                            XF86XK_AudioRaiseVolume,    spawn,          {.v = volumeraise } },
 	{ 0,                            XF86XK_AudioMute,           spawn,          {.v = volumetoggle } },
