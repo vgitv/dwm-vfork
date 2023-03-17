@@ -64,14 +64,15 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 
 // personnal
-static const char *termcmd[]  =      { "alacritty", NULL };
-static const char *volumelower[] =   { "set-volume", "--lower", NULL };
-static const char *volumeraise[] =   { "set-volume", "--raise", NULL };
-static const char *volumetoggle[] =  { "set-volume", "--toggle", NULL };
+static const char *termcmd[]       = { "alacritty", NULL };
+static const char *volumelower[]   = { "set-volume", "--lower", NULL };
+static const char *volumeraise[]   = { "set-volume", "--raise", NULL };
+static const char *volumetoggle[]  = { "set-volume", "--toggle", NULL };
 static const char *volumedisplay[] = { "set-volume", "--display", NULL };
-static const char *screenshot[] =    { "screenshot", NULL };
-static const char *systempause[] =   { "systempause", NULL };
+static const char *screenshot[]    = { "screenshot", NULL };
+static const char *systempause[]   = { "systempause", NULL };
 static const char *refreshstatus[] = { "refresh-status", NULL };
+static const char *sshterm[]       = { "sshterm", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -113,6 +114,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Pause,  spawn,          {.v = systempause } },
 	{ MODKEY,                       XK_x,      spawn,          {.v = screenshot } },
 	{ MODKEY,                       XK_r,      spawn,          {.v = refreshstatus } },
+	{ MODKEY,                       XK_s,      spawn,          {.v = sshterm } },
 	{ 0,                            XF86XK_AudioLowerVolume,    spawn,          {.v = volumelower } },
 	{ 0,                            XF86XK_AudioRaiseVolume,    spawn,          {.v = volumeraise } },
 	{ 0,                            XF86XK_AudioMute,           spawn,          {.v = volumetoggle } },
