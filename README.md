@@ -4,30 +4,25 @@
 
 This is a fork of dwm, see [https://dwm.suckless.org/](https://dwm.suckless.org/) for original project.
 
+Updated from original project in march 2022.
+
 ## Changes
 
-### French layout
+### Mod key
 
-Change tag with MODKEY + `&é"'(-è_ç` keys.
+Set modkey to Mod4Mask (super).
 
-### Active border color
+Allow Alt key (Mod1Mask) for this specific actions :
 
-Make a more noticable border color by defining a `col_border` variable in config.h.
+* close window
+* drag window around with the mouse
+* resize window with the mouse
 
-### Volume keys
+### Miscellaneous changes in config.h
 
-Include the following lib in config.h :
-
-```c
-#include <X11/XF86keysym.h>
-```
-
-in order to use the following keys :
-
-* `XF86XK_AudioLowerVolume`
-* `XF86XK_AudioRaiseVolume`
-* `XF86XK_AudioMute`
-
-### Screenshot
-
-Screenshot script shortcut with Mod+x.
+* Invert terminal spawn and zoom shortcut (modkey+return for terminal spawn and modkey+shift+return for zoom)
+* Switch tag view with MODKEY + `&é"'(-è_ç` keys (french layout)
+* Make a more noticable border color for active window by defining a `col_border` variable in config.h
+* Audio key mapping (Lower, Raise an Mute) whith the X11/XF86keysym.h library
+* Screenshot script shortcut with Mod+x
+* Shutdown system with modkey+pause

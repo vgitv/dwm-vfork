@@ -16,8 +16,8 @@ static const char col_cyan[]        = "#005577";
 static const char col_border[]      = "#FF5577";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2  },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_border },
+	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
+	[SchemeSel]  = { col_gray4, col_cyan,  col_border  },
 };
 
 /* tagging */
@@ -37,6 +37,7 @@ static const Rule rules[] = {
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
@@ -60,26 +61,16 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[]    = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-// static const char *termcmd[]     = { "st", "zsh", NULL };
-static const char *termcmd[]     = { "alacritty", NULL };
-static const char *ranger[]      = { "st", "-e", "ranger", NULL };
-static const char *htop[]        = { "st", "-e", "htop", NULL };
-// static const char *firefox[]     = { "firefox", NULL };
-static const char *brave[]     = { "brave-browser", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 
-// scripts perso
-static const char *diskutill[]   = { "diskutil", "-l", NULL };
-static const char *diskutilm[]   = { "diskutil", "-m", NULL };
-static const char *diskutilu[]   = { "diskutil", "-u", NULL };
-static const char *lowervol[]    = { "setvolume", "--lower", NULL };
-static const char *raisevol[]    = { "setvolume", "--raise", NULL };
-static const char *togglevol[]   = { "setvolume", "--toggle", NULL };
-static const char *screenshot[]   = { "screenshot", NULL };
-static const char *systempause[] = { "systempause", NULL };
-
-// temporaire
-static const char *play[]   = { "play.sh", NULL };
+// personnal
+static const char *termcmd[]  =      { "alacritty", NULL };
+static const char *volumelower[] =   { "set-volume", "--lower", NULL };
+static const char *volumeraise[] =   { "set-volume", "--raise", NULL };
+static const char *volumetoggle[] =  { "set-volume", "--toggle", NULL };
+static const char *volumedisplay[] = { "set-volume", "--display", NULL };
+static const char *screenshot[] =    { "screenshot", NULL };
+static const char *systempause[] =   { "systempause", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -95,6 +86,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
+	{ MODKEY,                       XK_F4,     killclient,     {0} },
 	{ Mod1Mask,                     XK_F4,     killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
@@ -117,19 +109,12 @@ static Key keys[] = {
 	TAGKEYS(                        XK_underscore,             7)
 	TAGKEYS(                        XK_ccedilla,               8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ MODKEY|ControlMask,           XK_r,      spawn,          {.v = ranger } },
-	{ MODKEY|ControlMask,           XK_h,      spawn,          {.v = htop } },
-	{ MODKEY|ControlMask,           XK_l,      spawn,          {.v = diskutill } },
-	{ MODKEY|ControlMask,           XK_m,      spawn,          {.v = diskutilm } },
-	{ MODKEY|ControlMask,           XK_u,      spawn,          {.v = diskutilu } },
-	// { MODKEY|ControlMask,           XK_f,      spawn,          {.v = firefox } },
-	{ MODKEY|ControlMask,           XK_b,      spawn,          {.v = brave } },
-	{ MODKEY|ControlMask,           XK_p,      spawn,          {.v = play } },
-	{ MODKEY,                       XK_x,      spawn,          {.v = screenshot } },
 	{ MODKEY,                       XK_Pause,  spawn,          {.v = systempause } },
-	{ 0,                            XF86XK_AudioLowerVolume,    spawn,          {.v = lowervol } },
-	{ 0,                            XF86XK_AudioRaiseVolume,    spawn,          {.v = raisevol } },
-	{ 0,                            XF86XK_AudioMute,           spawn,          {.v = togglevol } },
+	{ MODKEY,                       XK_x,      spawn,          {.v = screenshot } },
+	{ 0,                            XF86XK_AudioLowerVolume,    spawn,          {.v = volumelower } },
+	{ 0,                            XF86XK_AudioRaiseVolume,    spawn,          {.v = volumeraise } },
+	{ 0,                            XF86XK_AudioMute,           spawn,          {.v = volumetoggle } },
+	{MODKEY,                        XK_v,                       spawn,          {.v = volumedisplay } },
 };
 
 /* button definitions */
@@ -141,8 +126,10 @@ static Button buttons[] = {
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
 	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
+	{ ClkClientWin,         Mod1Mask,       Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
+	{ ClkClientWin,         Mod1Mask,       Button3,        resizemouse,    {0} },
 	{ ClkTagBar,            0,              Button1,        view,           {0} },
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
