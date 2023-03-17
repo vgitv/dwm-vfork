@@ -26,3 +26,4 @@ Allow Alt key (Mod1Mask) for this specific actions :
 * Audio key mapping (Lower, Raise an Mute) whith the X11/XF86keysym.h library
 * Screenshot script shortcut with Mod+x
 * Shutdown system with modkey+pause
+* Refresh status bar with modkey+r
