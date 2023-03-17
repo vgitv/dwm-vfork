@@ -28,3 +28,4 @@ Allow Alt key (Mod1Mask) for this specific actions :
 * Shutdown system with modkey+pause
 * Refresh status bar with modkey+r
 * launch sshterm script with modkey+x (launch remote ssh session from ssh config file in st)
+* allow modkey+right/left for resize master (along with modkey+h/l)
