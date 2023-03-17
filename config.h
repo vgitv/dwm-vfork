@@ -73,6 +73,7 @@ static const char *screenshot[]    = { "screenshot", NULL };
 static const char *systempause[]   = { "systempause", NULL };
 static const char *refreshstatus[] = { "refresh-status", NULL };
 static const char *sshterm[]       = { "sshterm", NULL };
+static const char *passmenu[]      = { "notify-passmenu", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -113,6 +114,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_underscore,             7)
 	TAGKEYS(                        XK_ccedilla,               8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = passmenu } },
 	{ MODKEY,                       XK_Pause,  spawn,          {.v = systempause } },
 	{ MODKEY,                       XK_x,      spawn,          {.v = screenshot } },
 	{ MODKEY,                       XK_r,      spawn,          {.v = refreshstatus } },
