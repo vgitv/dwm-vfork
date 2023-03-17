@@ -75,6 +75,7 @@ static const char *refreshstatus[] = { "refresh-status", NULL };
 static const char *sshterm[]       = { "sshterm", NULL };
 static const char *passmenu[]      = { "notify-passmenu", NULL };
 static const char *copyqmenu[]     = { "copyq", "menu", NULL };
+static const char *lock[]          = { "i3lock", "-p", "default", "-e", "-f", "-i", "/usr/local/share/dwm/dwm.png", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -121,6 +122,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_r,      spawn,          {.v = refreshstatus } },
 	{ MODKEY,                       XK_s,      spawn,          {.v = sshterm } },
 	{ MODKEY,                       XK_c,      spawn,          {.v = copyqmenu } },
+	{ MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lock } },
 	{ 0,                            XF86XK_AudioLowerVolume,    spawn,          {.v = volumelower } },
 	{ 0,                            XF86XK_AudioRaiseVolume,    spawn,          {.v = volumeraise } },
 	{ 0,                            XF86XK_AudioMute,           spawn,          {.v = volumetoggle } },
