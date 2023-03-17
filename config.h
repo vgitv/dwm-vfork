@@ -29,7 +29,8 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class       instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",      NULL,       NULL,       0,            0,           -1 },
+	{ "copyq",     NULL,       NULL,       0,            1,           -1 },
+	// { "Gimp",      NULL,       NULL,       0,            0,           -1 },
 	// { "Alacritty", NULL,       NULL,       0,            1,           -1 },
 	// { "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 };
@@ -78,6 +79,7 @@ static const char *sshterm[]       = { "sshterm", NULL };
 static const char *passmenu[]      = { "notify-passmenu", NULL };
 static const char *passmenutype[]  = { "notify-passmenu", "--type", NULL };
 static const char *copyqmenu[]     = { "copyq", "menu", NULL };
+static const char *copyqtoggle[]   = { "copyq", "toggle", NULL };
 static const char *screenlock[]    = { "screenlock", NULL };
 
 static Key keys[] = {
@@ -125,12 +127,13 @@ static Key keys[] = {
 	{ MODKEY,                       XK_x,      spawn,          {.v = screenshot } },
 	{ MODKEY,                       XK_r,      spawn,          {.v = refreshstatus } },
 	{ MODKEY,                       XK_s,      spawn,          {.v = sshterm } },
-	{ MODKEY,                       XK_c,      spawn,          {.v = copyqmenu } },
+	{ MODKEY,                       XK_v,      spawn,          {.v = copyqmenu } },
+	{ MODKEY|ShiftMask,             XK_v,      spawn,          {.v = copyqtoggle } },
 	{ MODKEY,                       XK_l,      spawn,          {.v = screenlock } },
 	{ 0,                            XF86XK_AudioLowerVolume,    spawn,          {.v = volumelower } },
 	{ 0,                            XF86XK_AudioRaiseVolume,    spawn,          {.v = volumeraise } },
 	{ 0,                            XF86XK_AudioMute,           spawn,          {.v = volumetoggle } },
-	{MODKEY,                        XK_v,                       spawn,          {.v = volumedisplay } },
+	{MODKEY|ControlMask,            XK_v,                       spawn,          {.v = volumedisplay } },
 };
 
 /* button definitions */
